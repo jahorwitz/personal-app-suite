@@ -1,13 +1,31 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HomePage } from "./features/dashboard/pages";
-import { Toaster } from "@jahorwitz/ui";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { LanguageProvider } from "./i18n";
+import { Layout, ScrollToTop } from "./layout";
+import { HomePage, ContactPage } from "./pages";
 
+/**
+ * Root application component.
+ *
+ * Sets up routing with an optional `:lang` prefix for i18n.
+ * All pages render inside the shared Layout (Header + Footer).
+ */
 function App() {
   return (
     <BrowserRouter>
-      <Toaster position="top-center" />
+      <ScrollToTop />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/:lang?"
+          element={
+            <LanguageProvider>
+              <Layout />
+            </LanguageProvider>
+          }
+        >
+          <Route index element={<HomePage />} />
+          <Route path="contact" element={<ContactPage />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
