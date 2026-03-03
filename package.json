@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "pnpm db:start && pnpm --parallel --filter './apps/frontend' dev",
+    "dev": "pnpm --parallel --filter './apps/personal-site' dev",
     "build": "pnpm -r build",
     "lint": "eslint . --ext .ts,.tsx"
   },
