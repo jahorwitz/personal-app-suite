@@ -128,6 +128,7 @@ jobs:
     name: Deploy to prod
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
+    environment: ${{ inputs.environment || github.event.inputs.environment }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
