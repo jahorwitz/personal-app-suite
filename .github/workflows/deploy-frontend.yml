@@ -1,0 +1,200 @@
+name: Deploy Frontend
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "Environment to deploy"
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy"
+        required: true
+        type: choice
+        options:
+          - development
+          - prod
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: deploy-frontend-${{ inputs.environment || github.event.inputs.environment }}
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: us-east-1
+  NODE_VERSION: "24"
+  PNPM_VERSION: "10"
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.environment || github.event.inputs.environment }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment || github.event.inputs.environment }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set environment variables
+        id: env-vars
+        run: |
+          ENV="${{ inputs.environment || github.event.inputs.environment }}"
+
+          echo "vite-environment=prod" >> $GITHUB_OUTPUT
+          echo "stack-name=prod-Frontend" >> $GITHUB_OUTPUT
+          echo "export-bucket=prod-frontend-BucketName" >> $GITHUB_OUTPUT
+          echo "export-dist=prod-frontend-DistributionId" >> $GITHUB_OUTPUT
+          echo "verify-url=https://withjosh.net" >> $GITHUB_OUTPUT
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build theme library
+        working-directory: packages/theme
+        run: pnpm build
+
+      - name: Build component library
+        working-directory: packages/ui
+        run: pnpm build
+
+      - name: Reinstall dependencies (after building libs)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build frontend
+        working-directory: apps/shell
+        env:
+          VITE_API_URL: ${{ steps.env-vars.outputs.vite-api-url }}
+          VITE_WS_URL: ${{ steps.env-vars.outputs.vite-ws-url }}
+          VITE_ENVIRONMENT: ${{ steps.env-vars.outputs.vite-environment }}
+          VITE_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+        run: |
+          echo "Building frontend for ${{ steps.env-vars.outputs.vite-environment }} environment..."
+          pnpm build
+
+          # Verify build output
+          if [ ! -d "dist" ] || [ -z "$(ls -A dist)" ]; then
+            echo "❌ Build failed - dist directory is empty"
+            exit 1
+          fi
+
+          echo "✅ Build completed successfully"
+          ls -lah dist/
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ inputs.environment == 'prod' && secrets.AWS_ACCESS_KEY_ID_PROD || secrets.AWS_ACCESS_KEY_ID_DEV }}
+          aws-secret-access-key: ${{ inputs.environment == 'prod' && secrets.AWS_SECRET_ACCESS_KEY_PROD || secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Get S3 bucket and CloudFront distribution
+        id: infra
+        env:
+          STACK_NAME: ${{ steps.env-vars.outputs.stack-name }}
+          EXPORT_BUCKET: ${{ steps.env-vars.outputs.export-bucket }}
+          EXPORT_DIST: ${{ steps.env-vars.outputs.export-dist }}
+        run: |
+          BUCKET=$(aws cloudformation describe-stacks \
+            --stack-name $STACK_NAME \
+            --query 'Stacks[0].Outputs[?ExportName==`'$EXPORT_BUCKET'`].OutputValue' \
+            --output text)
+
+          DIST_ID=$(aws cloudformation describe-stacks \
+            --stack-name $STACK_NAME \
+            --query 'Stacks[0].Outputs[?ExportName==`'$EXPORT_DIST'`].OutputValue' \
+            --output text)
+
+          echo "bucket=$BUCKET" >> $GITHUB_OUTPUT
+          echo "distribution=$DIST_ID" >> $GITHUB_OUTPUT
+
+          echo "S3 Bucket: $BUCKET"
+          echo "CloudFront Distribution: $DIST_ID"
+
+      - name: Sync to S3
+        working-directory: apps/shell
+        env:
+          BUCKET: ${{ steps.infra.outputs.bucket }}
+        run: |
+          echo "Syncing static assets to S3..."
+
+          # Sync all files except index.html with long cache
+          aws s3 sync dist/ s3://$BUCKET/ \
+            --delete \
+            --cache-control "public,max-age=31536000,immutable" \
+            --exclude "index.html" \
+            --exclude "*.map"
+
+          # Upload index.html with no cache
+          aws s3 cp dist/index.html s3://$BUCKET/index.html \
+            --cache-control "public,max-age=0,must-revalidate" \
+            --content-type "text/html"
+
+          echo "✅ Files synced to S3"
+
+      - name: Invalidate CloudFront cache
+        env:
+          DIST_ID: ${{ steps.infra.outputs.distribution }}
+        run: |
+          echo "Creating CloudFront invalidation..."
+
+          INVALIDATION_ID=$(aws cloudfront create-invalidation \
+            --distribution-id $DIST_ID \
+            --paths "/*" \
+            --query 'Invalidation.Id' \
+            --output text)
+
+          echo "Invalidation ID: $INVALIDATION_ID"
+          echo "✅ CloudFront cache invalidated"
+
+      - name: Verify deployment
+        env:
+          VERIFY_URL: ${{ steps.env-vars.outputs.verify-url }}
+        run: |
+          echo "Waiting for invalidation to complete..."
+          sleep 10
+
+          # Verify deployment
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" $VERIFY_URL || echo "000")
+
+          if [ "$STATUS" == "200" ] || [ "$STATUS" == "304" ]; then
+            echo "✅ Deployment verified (status: $STATUS)"
+          else
+            echo "⚠️ Verification returned status: $STATUS"
+          fi
+
+      - name: Upload build artifacts
+        if: inputs.environment == 'prod'
+        uses: actions/upload-artifact@v4
+        with:
+          name: prod-frontend-build
+          path: apps/shell/dist
+          retention-days: 30

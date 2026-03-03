@@ -1,0 +1,1 @@
+1. When implementing steps for a phased plan, do not include references to the plan in the commented parts of the code, as the plans are not committed to the repository and so these comments will not make sense later on.
