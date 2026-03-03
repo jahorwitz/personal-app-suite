@@ -3,9 +3,9 @@ import type { SiteContent } from "../types";
 export const fr: SiteContent = {
   meta: {
     siteTitle:
-      "Josh Horwitz — Architecte Backend Fractionnel et Ingénieur Full-Stack",
+      "Josh Horwitz — Ingénieur Principal Fractionnel et Architecte pour SaaS",
     siteDescription:
-      "J'aide les équipes SaaS à renforcer leur backend, construire des systèmes évolutifs et améliorer la fiabilité. Ingénierie fractionnelle et conseil pour les startups de Seed à Série B.",
+      "J'aide les équipes SaaS en phase d'amorçage à préparer leurs produits pour passer à l'échelle — architecture, implémentation full-stack, DevOps et infrastructure. Ingénierie fractionnelle pour les startups de Seed à Série B.",
     ogImage: "/og-image.png",
     twitterHandle: "@jahorwitz",
   },
@@ -15,22 +15,22 @@ export const fr: SiteContent = {
       { label: "Services", href: "#services" },
       { label: "Réalisations", href: "#work-highlights" },
       { label: "Tarifs", href: "#how-i-work" },
-      { label: "Contact", href: "/contact" },
+      { label: "Contact", href: "#cta-footer" },
     ],
     contactCta: "Réserver un Appel",
   },
 
   hero: {
-    headline: "Architecture Backend pour SaaS Opérationnel",
+    headline: "Ingénieur Principal Fractionnel pour Équipes SaaS en Croissance",
     subheadline:
-      "Je renforce les MVPs pour en faire des systèmes évolutifs, je démêle les backends hérités et j'apporte de la fiabilité aux équipes SaaS en croissance rapide — pour que vous puissiez livrer en toute confiance.",
+      "J'aide les équipes SaaS en phase d'amorçage à préparer leurs produits pour passer à l'échelle — architecture, implémentation full-stack, DevOps et infrastructure. De la modélisation de données aux pipelines CI/CD, je rends votre système prêt pour la production.",
     primaryCta: {
       label: "Réserver un Appel",
       href: "https://calendly.com/joshs-room",
     },
     secondaryCta: {
       label: "M'envoyer un Email",
-      href: "mailto:josh@withjosh.net",
+      href: "mailto:jahorwitz94@gmail.com",
     },
   },
 
@@ -207,22 +207,27 @@ export const fr: SiteContent = {
             "Je travaille de manière asynchrone par défaut avec des mises à jour écrites et de la documentation. Je suis disponible sur Slack, par email ou sur vos outils d'équipe.",
         },
         {
-          title: "Point Hebdomadaire",
+          title: "Points Réguliers",
           description:
-            "Un point fixe par semaine pour aligner les priorités, revoir l'avancement et débloquer les problèmes.",
+            "Points réguliers — hebdomadaires ou plusieurs fois par semaine, selon votre préférence — pour aligner les priorités, revoir l'avancement et débloquer les problèmes.",
         },
         {
           title: "Comptes Rendus Écrits",
           description:
             "Résumés de fin de semaine couvrant ce qui a été livré, ce qui est en cours et les prochaines étapes. Pas de confusion sur l'état d'avancement.",
         },
+        {
+          title: "Standups d'Équipe",
+          description:
+            "Disponible pour participer aux standups et réunions de votre équipe selon les besoins, pour rester aligné et contribuer directement.",
+        },
       ],
     },
     pricing: {
       title: "Tarifs",
       description:
-        "À l'heure : 130–160 $/h selon le périmètre et l'engagement. Forfaits à partir de 8 000 $+/mois pour les engagements fractionnels.",
-      note: "Chaque engagement commence par un appel découverte gratuit de 30 minutes. Sans obligation.",
+        "À l'heure : 100–160 $/h selon le périmètre. Forfaits à partir de 8 000 $+/mois pour les engagements fractionnels.",
+      note: "Un appel découverte gratuit permettra de déterminer le périmètre du projet et le tarif final. Sans obligation.",
     },
   },
 
@@ -261,34 +266,6 @@ export const fr: SiteContent = {
     cta: {
       label: "Réserver un Appel",
       href: "https://calendly.com/joshs-room",
-    },
-  },
-
-  contact: {
-    pageTitle: "Contact",
-    pageDescription:
-      "Vous avez un projet en tête ou souhaitez discuter de comment je peux vous aider ? Remplissez le formulaire et je vous répondrai dans un jour ouvré.",
-    form: {
-      nameLabel: "Nom",
-      namePlaceholder: "Votre nom",
-      emailLabel: "Email",
-      emailPlaceholder: "vous@exemple.com",
-      subjectLabel: "Sujet",
-      subjectPlaceholder: "Comment puis-je vous aider ?",
-      subjectOptions: [
-        { value: "general", label: "Demande Générale" },
-        { value: "fractional", label: "Engagement CTO Fractionnel" },
-        { value: "freelance", label: "Projet Freelance" },
-        { value: "advisory", label: "Conseil / Consulting" },
-        { value: "other", label: "Autre" },
-      ],
-      messageLabel: "Message",
-      messagePlaceholder: "Parlez-moi de votre projet ou défi...",
-      submitLabel: "Envoyer le Message",
-      successMessage:
-        "Merci pour votre message ! Je vous répondrai dans un jour ouvré.",
-      errorMessage:
-        "Un problème est survenu lors de l'envoi de votre message. Veuillez réessayer ou m'envoyer un email directement.",
     },
   },
 

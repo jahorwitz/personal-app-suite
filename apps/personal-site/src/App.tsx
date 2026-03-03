@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "./i18n";
 import { Layout, ScrollToTop } from "./layout";
-import { HomePage, ContactPage } from "./pages";
+import { HomePage } from "./pages";
 
 /**
  * Root application component.
@@ -23,7 +23,6 @@ function App() {
           }
         >
           <Route index element={<HomePage />} />
-          <Route path="contact" element={<ContactPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

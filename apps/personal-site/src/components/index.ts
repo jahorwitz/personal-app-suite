@@ -11,5 +11,3 @@ export { LanguageSwitcher } from "./LanguageSwitcher";
 
 export { SEOHead } from "./SEOHead";
 export type { SEOHeadProps } from "./SEOHead";
-
-export { ContactForm } from "./ContactForm";

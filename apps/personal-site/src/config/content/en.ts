@@ -3,9 +3,9 @@ import type { SiteContent } from "../types";
 export const en: SiteContent = {
   meta: {
     siteTitle:
-      "Josh Horwitz — Fractional Backend Architect & Full-Stack Engineer",
+      "Josh Horwitz — Fractional Principal Engineer & Architect for SaaS",
     siteDescription:
-      "I help SaaS teams harden their backend, ship scalable systems, and improve reliability. Fractional engineering and consulting for Seed–Series B startups.",
+      "I help early-stage SaaS teams harden their products for scale — architecture, full-stack implementation, DevOps, and infrastructure. Fractional engineering for Seed–Series B startups.",
     ogImage: "/og-image.png",
     twitterHandle: "@jahorwitz",
   },
@@ -15,22 +15,22 @@ export const en: SiteContent = {
       { label: "Services", href: "#services" },
       { label: "Work", href: "#work-highlights" },
       { label: "Pricing", href: "#how-i-work" },
-      { label: "Contact", href: "/contact" },
+      { label: "Contact", href: "#cta-footer" },
     ],
     contactCta: "Book a Call",
   },
 
   hero: {
-    headline: "Backend Architecture for Operational SaaS",
+    headline: "Fractional Principal Engineer for Growing SaaS Teams",
     subheadline:
-      "I harden MVPs into scalable systems, untangle legacy backends, and bring reliability to fast-moving SaaS teams — so you can ship with confidence.",
+      "I help early-stage SaaS teams harden their products for scale — architecture, full-stack implementation, DevOps, and infrastructure. From data modeling to CI/CD pipelines, I make your system production-ready.",
     primaryCta: {
       label: "Book a Call",
       href: "https://calendly.com/joshs-room",
     },
     secondaryCta: {
       label: "Email Me",
-      href: "mailto:josh@withjosh.net",
+      href: "mailto:jahorwitz94@gmail.com",
     },
   },
 
@@ -213,22 +213,27 @@ export const en: SiteContent = {
             "I work asynchronously by default with written updates and documentation. I'm available on Slack, email, or your team's tools.",
         },
         {
-          title: "Weekly Syncs",
+          title: "Regular Syncs",
           description:
-            "One standing sync per week to align on priorities, review progress, and unblock any issues.",
+            "Regular syncs — weekly or multiple times per week, based on your preference — to align on priorities, review progress, and unblock any issues.",
         },
         {
           title: "Written Updates",
           description:
             "End-of-week summaries covering what shipped, what's in progress, and what's next. No confusion about where things stand.",
         },
+        {
+          title: "Team Standups",
+          description:
+            "Happy to join your team's standups and meetings as needed to stay aligned and contribute directly.",
+        },
       ],
     },
     pricing: {
       title: "Pricing",
       description:
-        "Hourly: $130–160/hr depending on scope and commitment. Retainers starting at $8k+/month for fractional engagements.",
-      note: "Every engagement starts with a free 30-minute discovery call. No commitment required.",
+        "Hourly: $100–160/hr depending on scope. Retainers starting at $8k+/month for fractional engagements.",
+      note: "A free discovery call will determine project scope and final pricing. No commitment required.",
     },
   },
 
@@ -266,34 +271,6 @@ export const en: SiteContent = {
     cta: {
       label: "Book a Call",
       href: "https://calendly.com/joshs-room",
-    },
-  },
-
-  contact: {
-    pageTitle: "Get in Touch",
-    pageDescription:
-      "Have a project in mind or want to discuss how I can help? Fill out the form below and I'll get back to you within one business day.",
-    form: {
-      nameLabel: "Name",
-      namePlaceholder: "Your name",
-      emailLabel: "Email",
-      emailPlaceholder: "you@example.com",
-      subjectLabel: "Subject",
-      subjectPlaceholder: "What can I help with?",
-      subjectOptions: [
-        { value: "general", label: "General Inquiry" },
-        { value: "fractional", label: "Fractional CTO Engagement" },
-        { value: "freelance", label: "Freelance Project" },
-        { value: "advisory", label: "Advisory / Consulting" },
-        { value: "other", label: "Other" },
-      ],
-      messageLabel: "Message",
-      messagePlaceholder: "Tell me about your project or challenge...",
-      submitLabel: "Send Message",
-      successMessage:
-        "Thanks for reaching out! I'll get back to you within one business day.",
-      errorMessage:
-        "Something went wrong sending your message. Please try again or email me directly.",
     },
   },
 

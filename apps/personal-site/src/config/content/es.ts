@@ -3,9 +3,9 @@ import type { SiteContent } from "../types";
 export const es: SiteContent = {
   meta: {
     siteTitle:
-      "Josh Horwitz — Arquitecto Backend Fraccional e Ingeniero Full-Stack",
+      "Josh Horwitz — Ingeniero Principal Fraccional y Arquitecto para SaaS",
     siteDescription:
-      "Ayudo a equipos SaaS a fortalecer su backend, crear sistemas escalables y mejorar la confiabilidad. Ingeniería fraccional y consultoría para startups de Seed a Serie B.",
+      "Ayudo a equipos SaaS en etapa temprana a preparar sus productos para escalar — arquitectura, implementación full-stack, DevOps e infraestructura. Ingeniería fraccional para startups de Seed a Serie B.",
     ogImage: "/og-image.png",
     twitterHandle: "@jahorwitz",
   },
@@ -15,22 +15,22 @@ export const es: SiteContent = {
       { label: "Servicios", href: "#services" },
       { label: "Trabajo", href: "#work-highlights" },
       { label: "Precios", href: "#how-i-work" },
-      { label: "Contacto", href: "/contact" },
+      { label: "Contacto", href: "#cta-footer" },
     ],
     contactCta: "Agendar Llamada",
   },
 
   hero: {
-    headline: "Arquitectura Backend para SaaS Operacional",
+    headline: "Ingeniero Principal Fraccional para Equipos SaaS en Crecimiento",
     subheadline:
-      "Fortalezco MVPs para convertirlos en sistemas escalables, desenredo backends heredados y aporto confiabilidad a equipos SaaS en rápido crecimiento — para que puedas lanzar con confianza.",
+      "Ayudo a equipos SaaS en etapa temprana a preparar sus productos para escalar — arquitectura, implementación full-stack, DevOps e infraestructura. Desde el modelado de datos hasta los pipelines de CI/CD, dejo tu sistema listo para producción.",
     primaryCta: {
       label: "Agendar Llamada",
       href: "https://calendly.com/joshs-room",
     },
     secondaryCta: {
       label: "Envíame un Email",
-      href: "mailto:josh@withjosh.net",
+      href: "mailto:jahorwitz94@gmail.com",
     },
   },
 
@@ -213,22 +213,27 @@ export const es: SiteContent = {
             "Trabajo de forma asíncrona por defecto con actualizaciones escritas y documentación. Estoy disponible en Slack, email o las herramientas de tu equipo.",
         },
         {
-          title: "Sincronización Semanal",
+          title: "Sincronización Regular",
           description:
-            "Una reunión fija por semana para alinear prioridades, revisar avances y desbloquear cualquier problema.",
+            "Sincronizaciones regulares — semanales o varias veces por semana, según tu preferencia — para alinear prioridades, revisar avances y desbloquear cualquier problema.",
         },
         {
           title: "Reportes Escritos",
           description:
             "Resúmenes de fin de semana cubriendo lo entregado, lo que está en progreso y los próximos pasos. Sin confusiones sobre el estado de las cosas.",
         },
+        {
+          title: "Standups del Equipo",
+          description:
+            "Encantado de unirme a los standups y reuniones de tu equipo según sea necesario para mantenerme alineado y contribuir directamente.",
+        },
       ],
     },
     pricing: {
       title: "Precios",
       description:
-        "Por hora: $130–160/hr según alcance y compromiso. Retainers desde $8k+/mes para compromisos fraccionales.",
-      note: "Cada compromiso comienza con una llamada de descubrimiento gratuita de 30 minutos. Sin obligación.",
+        "Por hora: $100–160/hr según el alcance. Retainers desde $8k+/mes para compromisos fraccionales.",
+      note: "Una llamada de descubrimiento gratuita determinará el alcance del proyecto y el precio final. Sin obligación.",
     },
   },
 
@@ -266,33 +271,6 @@ export const es: SiteContent = {
     cta: {
       label: "Agendar Llamada",
       href: "https://calendly.com/joshs-room",
-    },
-  },
-
-  contact: {
-    pageTitle: "Contacto",
-    pageDescription:
-      "¿Tienes un proyecto en mente o quieres conversar sobre cómo puedo ayudar? Completa el formulario y te responderé en un día hábil.",
-    form: {
-      nameLabel: "Nombre",
-      namePlaceholder: "Tu nombre",
-      emailLabel: "Email",
-      emailPlaceholder: "tu@ejemplo.com",
-      subjectLabel: "Asunto",
-      subjectPlaceholder: "¿En qué puedo ayudarte?",
-      subjectOptions: [
-        { value: "general", label: "Consulta General" },
-        { value: "fractional", label: "Compromiso CTO Fraccional" },
-        { value: "freelance", label: "Proyecto Freelance" },
-        { value: "advisory", label: "Asesoría / Consultoría" },
-        { value: "other", label: "Otro" },
-      ],
-      messageLabel: "Mensaje",
-      messagePlaceholder: "Cuéntame sobre tu proyecto o desafío...",
-      submitLabel: "Enviar Mensaje",
-      successMessage: "¡Gracias por escribirme! Te responderé en un día hábil.",
-      errorMessage:
-        "Hubo un problema al enviar tu mensaje. Intenta de nuevo o envíame un email directamente.",
     },
   },
 

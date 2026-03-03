@@ -1,4 +1,10 @@
-import { Clock, MessageSquare, CalendarCheck, FileText } from "lucide-react";
+import {
+  Clock,
+  MessageSquare,
+  CalendarCheck,
+  FileText,
+  Users,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import { SectionWrapper } from "../components";
 import { useContent } from "../i18n";
@@ -8,6 +14,7 @@ const stepIcons: ReactNode[] = [
   <MessageSquare className="h-5 w-5" aria-hidden="true" key="msg" />,
   <CalendarCheck className="h-5 w-5" aria-hidden="true" key="cal" />,
   <FileText className="h-5 w-5" aria-hidden="true" key="file" />,
+  <Users className="h-5 w-5" aria-hidden="true" key="users" />,
 ];
 
 export function HowIWork() {

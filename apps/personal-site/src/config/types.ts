@@ -12,7 +12,7 @@ export interface SiteContent {
   howIWork: HowIWorkContent;
   problemsIFix: ProblemsIFixContent;
   ctaFooter: CTAFooterContent;
-  contact: ContactContent;
+  contact?: ContactContent;
   footer: FooterContent;
   common: CommonContent;
 }

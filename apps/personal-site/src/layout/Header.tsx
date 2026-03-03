@@ -77,9 +77,6 @@ export function Header() {
     if (href.startsWith("#")) {
       return activeSection === href.slice(1);
     }
-    if (href === "/contact") {
-      return location.pathname.endsWith("/contact");
-    }
     return false;
   };
 
