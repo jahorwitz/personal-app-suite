@@ -18,7 +18,6 @@ on:
         required: true
         type: choice
         options:
-          - development
           - prod
 
 permissions:
@@ -39,7 +38,6 @@ jobs:
   cdk-diff:
     name: CDK Diff (Preview Changes)
     runs-on: ubuntu-latest
-    environment: prod
     if: github.event_name == 'pull_request'
     steps:
       - name: Checkout code
@@ -127,10 +125,9 @@ jobs:
             });
 
   deploy:
-    name: Deploy to ${{ inputs.environment || github.event.inputs.environment }}
+    name: Deploy to prod
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
-    environment: ${{ inputs.environment || github.event.inputs.environment }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -164,8 +161,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ inputs.environment == 'prod' && secrets.AWS_ACCESS_KEY_ID_PROD || secrets.AWS_ACCESS_KEY_ID_PROD }}
-          aws-secret-access-key: ${{ inputs.environment == 'prod' && secrets.AWS_SECRET_ACCESS_KEY_PROD || secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Set CDK environment variables
@@ -218,20 +215,19 @@ jobs:
         with:
           name: ${{ env.ENVIRONMENT }}-deployment-outputs
           path: deployment-outputs-${{ env.ENVIRONMENT }}.json
-          retention-days: ${{ inputs.environment == 'prod' && 90 || 30 }}
+          retention-days: 90
 
   drift-detection:
     name: Drift Detection
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     needs: deploy
-    environment: ${{ inputs.environment || github.event.inputs.environment }}
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ inputs.environment == 'prod' && secrets.AWS_ACCESS_KEY_ID_PROD || secrets.AWS_ACCESS_KEY_ID_PROD }}
-          aws-secret-access-key: ${{ inputs.environment == 'prod' && secrets.AWS_SECRET_ACCESS_KEY_PROD || secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Detect stack drift
