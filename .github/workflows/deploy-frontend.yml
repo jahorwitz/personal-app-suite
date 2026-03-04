@@ -45,8 +45,8 @@ jobs:
 
           echo "vite-environment=prod" >> $GITHUB_OUTPUT
           echo "stack-name=prod-Frontend" >> $GITHUB_OUTPUT
-          echo "export-bucket=prod-frontend-BucketName" >> $GITHUB_OUTPUT
-          echo "export-dist=prod-frontend-DistributionId" >> $GITHUB_OUTPUT
+          echo "export-bucket=prod-personal-site-BucketName" >> $GITHUB_OUTPUT
+          echo "export-dist=prod-personal-site-DistributionId" >> $GITHUB_OUTPUT
           echo "verify-url=https://withjosh.net" >> $GITHUB_OUTPUT
 
       - name: Setup Node.js
