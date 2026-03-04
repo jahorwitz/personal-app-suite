@@ -39,7 +39,6 @@ export const tailwindConfig: Partial<Config> = {
     "./src/**/*.{js,ts,jsx,tsx}",
     "./stories/**/*.{js,ts,jsx,tsx}",
     // Include other packages that might use this theme
-    "../../packages/ui/src/**/*.{js,ts,jsx,tsx}",
     "../../apps/*/src/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: ["class"],

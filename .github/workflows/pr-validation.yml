@@ -38,7 +38,6 @@ jobs:
               - 'apps/personal-site/**'
               - 'packages/**'
             ui:
-              - 'packages/ui/**'
               - 'packages/theme/**'
 
   lint-and-typecheck:
@@ -125,15 +124,11 @@ jobs:
         working-directory: packages/theme
         run: pnpm build
 
-      - name: Build component library
-        working-directory: packages/ui
-        run: pnpm build
-
       - name: Reinstall dependencies (after building libs)
         run: pnpm install --frozen-lockfile
 
       - name: Build frontend
-        working-directory: apps/shell
+        working-directory: apps/personal-site
         env:
           VITE_ENVIRONMENT: development
         run: |
@@ -148,7 +143,7 @@ jobs:
           echo "✅ Frontend build successful"
 
       - name: Check bundle size
-        working-directory: apps/shell
+        working-directory: apps/personal-site
         run: |
           echo "Checking bundle size..."
           BUNDLE_SIZE=$(du -sh dist | cut -f1)

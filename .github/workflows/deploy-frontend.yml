@@ -79,22 +79,13 @@ jobs:
         working-directory: packages/theme
         run: pnpm build
 
-      - name: Build component library
-        working-directory: packages/ui
-        run: pnpm build
-
       - name: Reinstall dependencies (after building libs)
         run: pnpm install --frozen-lockfile
 
       - name: Build frontend
-        working-directory: apps/shell
+        working-directory: apps/personal-site
         env:
-          VITE_API_URL: ${{ steps.env-vars.outputs.vite-api-url }}
-          VITE_WS_URL: ${{ steps.env-vars.outputs.vite-ws-url }}
           VITE_ENVIRONMENT: ${{ steps.env-vars.outputs.vite-environment }}
-          VITE_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
-          VITE_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
         run: |
           echo "Building frontend for ${{ steps.env-vars.outputs.vite-environment }} environment..."
           pnpm build
@@ -139,7 +130,7 @@ jobs:
           echo "CloudFront Distribution: $DIST_ID"
 
       - name: Sync to S3
-        working-directory: apps/shell
+        working-directory: apps/personal-site
         env:
           BUCKET: ${{ steps.infra.outputs.bucket }}
         run: |
@@ -195,5 +186,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: prod-frontend-build
-          path: apps/shell/dist
+          path: apps/personal-site/dist
           retention-days: 30

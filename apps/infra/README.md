@@ -184,9 +184,3 @@ aws rds describe-db-clusters --db-cluster-identifier development-database
 - SSL/TLS encryption for all endpoints
 - IAM roles with minimal permissions
 - Automated secret rotation
-
-**Related Projects:**
-
-- API: [`apps/api/`](../api/)
-- Frontend: [`apps/shell/`](../shell/)
-- UI Library: [`packages/ui/`](../../packages/ui/)

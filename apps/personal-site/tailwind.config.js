@@ -6,7 +6,6 @@ export default createTailwindConfig({
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     // Include UI package components
-    "../../packages/ui/src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
