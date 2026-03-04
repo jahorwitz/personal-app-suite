@@ -39,6 +39,7 @@ jobs:
     name: CDK Diff (Preview Changes)
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    environment: ${{ inputs.environment || github.event.inputs.environment }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -223,6 +224,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     needs: deploy
+    environment: ${{ inputs.environment || github.event.inputs.environment }}
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
